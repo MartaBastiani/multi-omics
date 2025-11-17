@@ -14,12 +14,12 @@ option_list <- list(
 		default = NULL,
     help    = "analysis id (required)"
   ),
-#   make_option(
-# 	c("-O", "--omic"),
-# 	type = "character",
-# 	default = NULL,
-# 	help = "omic type (required)"
-#   ),
+  make_option(
+	c("-O", "--omic"),
+	type = "character",
+	default = NULL,
+	help = "omic type (required)"
+  ),
 	make_option(
     c("-C", "--contrast_file"),
     type = "character",
@@ -52,13 +52,13 @@ log2_fc_thr<-opt$log2_fc_thr
 
 analysis_id<-c(opt$id)
 
-
+omic_type<-opt$omic
 
 
 if (!is.null(opt$contrast_file)) {
 	files<-opt$contrast_file
 } else {
-	contrast_list<-read.delim(file.path("data/RNA",analysis_id,"/contrast.tsv"),sep="\t")
+	contrast_list<-read.delim(file.path("data/",omic_type,"/",analysis_id,"/contrast.tsv"),sep="\t")
 }
 
 if (!is.null(opt$deseq2_results)) {
