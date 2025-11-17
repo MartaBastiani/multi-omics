@@ -72,7 +72,7 @@ if (!is.null(opt$deseq2_results)) {
 for (file in files) {
 	filename<-paste0(file,"_volcano")
 	filename<-sub(".tsv","",filename)
-	df<-read.delim(file.path("data/RNA",analysis_id,file),sep="\t")
+	df<-read.delim(file.path("data/",omic_type,"/",analysis_id,file),sep="\t")
 	df_clean<-df[complete.cases(df), ]
 	df_clean$diffexpressed <- "NO"
 	df_clean$diffexpressed[df_clean$log2FoldChange > log2_fc_thr & df_clean$padj < p_value_thr] <- "UP"
@@ -120,7 +120,7 @@ for (file in files) {
   	ggplot2::ggtitle('')
   	
   	
-	filepath<-file.path("data/RNA",analysis_id,"plots","volcano",filename)
+	filepath<-file.path("data/",omic_type,"/",analysis_id,"plots","volcano",filename)
 	ggsave(
 		filename = paste0(filepath,".png"),
 		plot = p,
