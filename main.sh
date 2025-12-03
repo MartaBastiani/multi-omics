@@ -1,1 +1,10 @@
-Rscript R/volcano_plot.R -i -O -R
+# Proteins
+Rscript R/count_proteins.R -i prova 2> count_proteins.log
+Rscript R/DEA_limma.R -i prova -o proteins 2> DEA_limma_pro.log
+Rscript R/volcano_plot.R -i prova -o proteins 2> volcano_plot_pro.log
+
+
+# miRNA
+Rscript R/count_miRNA.R -i prova 2> count_miRNA.log
+Rscript R/DEA_limma.R -i prova -o miRNA 2> DEA_limma_miRNA.log
+Rscript R/volcano_plot.R -i prova -o miRNA 2> volcano_plot_miRNA.log
