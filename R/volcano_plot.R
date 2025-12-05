@@ -50,7 +50,7 @@ p_value_thr<-opt$p_value_thr
 log2_fc_thr<-opt$log2_fc_thr
 
 
-analysis_id<-c(opt$id)
+analysis_id<-opt$id
 
 omic_type<-opt$omic
 
