@@ -60,6 +60,8 @@ fit <- eBayes(fit)
 res_all <- topTable(fit, adjust="BH", n = Inf)
 res_all <- res_all[complete.cases(res_all), ]
 
+colnames(res_all) <- c("log2FoldChange", "AveExpr", "t", "P.Value", "padj", "B")
+
 suppressWarnings(dir.create(paste0("data/", omic_type, "/", analysis_id, "/results")))
 write.table(res_all,
   file = file.path("data", omic_type, analysis_id, "results",
