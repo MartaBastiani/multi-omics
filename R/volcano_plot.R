@@ -15,7 +15,7 @@ option_list <- list(
     help    = "analysis id (required)"
   ),
   make_option(
-	c("-O", "--omic"),
+	c("-o", "--omic"),
 	type = "character",
 	default = NULL,
 	help = "omic type (required)"
@@ -35,12 +35,12 @@ option_list <- list(
 	make_option(
     c("-t", "--p_value_thr"),
     default = 0.05,
-    help    = "Threshold for p-value (default: 0.05)"
+    help    = "threshold for p-value (default: 0.05)"
   ),
 	make_option(
     c("-T", "--log2_fc_thr"),
     default = 1.5,
-    help    = "Threshold for log2FC (default: 0.05)"
+    help    = "threshold for log2FC (default: 1.5)"
   )
 )
 
