@@ -85,6 +85,24 @@ for (file in files) {
 		df_clean[df_clean$diffexpressed == "DOWN",]
 	)
 
+
+	color_values<-c()
+	color_labels<-c()
+
+	if (any(grepl("DOWN",df_clean$diffexpressed))) {
+		color_values<-c(color_values,"#00AFBB")
+		color_labels<-c(color_labels,"DOWN")
+	}
+
+	color_values<-c(color_values,"grey")
+	color_labels<-c(color_labels,"NO")
+
+	if (any(grepl("UP",df_clean$diffexpressed))) {
+		color_values<-c(color_values,"#bb0c00")
+		color_labels<-c(color_labels,"UP")
+	}
+
+
 	df_clean$neglogp <- -log10(df_clean$padj)
 	CAP_Y <- 50                 # you can set 30–100 based on dataset
 	df_clean$neglogp_cap <- pmin(df_clean$neglogp, CAP_Y)
@@ -108,8 +126,8 @@ for (file in files) {
   	ggplot2::geom_hline(yintercept = -log10(p_value_thr), col = "gray", linetype = 'dashed') +
   	ggplot2::geom_point(size = 0.5) +
   	ggplot2::scale_color_manual(
-			values = c("#00AFBB", "grey", "#bb0c00"), # to set the colours of our variable<br />
-			labels = c("DOWN", "NO", "UP")
+			values = color_values,
+			labels = color_labels
 		) + 
   	ggplot2::coord_cartesian(ylim = c(0, ylimit), xlim = c(-xlimit, xlimit)) +
   	ggplot2::labs(
