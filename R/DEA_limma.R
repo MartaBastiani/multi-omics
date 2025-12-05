@@ -43,6 +43,7 @@ conditions <- metadata$Condition
 filename <- paste0("data/", omic_type, "/", analysis_id, "/to_DEA.tsv")
 data <- read.table(filename, sep="\t", header = T)
 logData <- log2(data) # log transformation for limma
+logData <- normalizeQuantiles(logData)
 
 Rf <- contrast_list[1, ]$Reference
 Tg <- contrast_list[1, ]$Target
