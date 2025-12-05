@@ -22,7 +22,7 @@ data <- aggregate(data[, sel], by = list(Gene.names = data$Gene.names), FUN = su
 rownames(data) <- data$Gene.names
 data$Gene.names <- NULL 
 
-countdata <- data[apply(data, 1, sum) > 1, ]
+countdata <- data[apply(data, 1, function(x) !any(x == 0)), ] # remove rows with 0s
 
 colnames(countdata) <- gsub("Reporter.intensity.corrected.", "", colnames(countdata))
 
