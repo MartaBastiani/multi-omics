@@ -58,13 +58,13 @@ omic_type<-opt$omic
 if (!is.null(opt$contrast_file)) {
 	files<-opt$contrast_file
 } else {
-	contrast_list<-read.delim(file.path("data/",omic_type,"/",analysis_id,"/contrast.tsv"),sep="\t")
+	contrast_list<-read.delim(file.path("data",omic_type,analysis_id,"contrast.tsv"),sep="\t")
 }
 
 if (!is.null(opt$deseq2_results)) {
 	files<-(opt$deseq2_results)
 } else {
-	files <- paste0(contrast_list$Target, "_vs_", contrast_list$Reference, ".tsv")
+	files <- paste0(contrast_list$Target, "_vs_", contrast_list$Reference, "_all.tsv")
 	files2 <- paste0(unique(contrast_list$Target), "_vs_", unique(contrast_list$Reference[1]),"_shrinked", ".tsv")
 	files<-c(files,files2)
 }
@@ -72,7 +72,7 @@ if (!is.null(opt$deseq2_results)) {
 for (file in files) {
 	filename<-paste0(file,"_volcano")
 	filename<-sub(".tsv","",filename)
-	df<-read.delim(file.path("data/",omic_type,"/",analysis_id,file),sep="\t")
+	df<-read.delim(file.path("data",omic_type,analysis_id,"results",file),sep="\t")
 	df_clean<-df[complete.cases(df), ]
 	df_clean$diffexpressed <- "NO"
 	df_clean$diffexpressed[df_clean$log2FoldChange > log2_fc_thr & df_clean$padj < p_value_thr] <- "UP"
@@ -119,8 +119,8 @@ for (file in files) {
 		) +
   	ggplot2::ggtitle('')
   	
-  	
-	filepath<-file.path("data/",omic_type,"/",analysis_id,"plots","volcano",filename)
+  	suppressWarnings(dir.create(file.path("data", omic_type, analysis_id, "plots", "volcano"), recursive = T))
+	filepath<-file.path("data",omic_type,analysis_id,"plots","volcano",filename)
 	ggsave(
 		filename = paste0(filepath,".png"),
 		plot = p,
