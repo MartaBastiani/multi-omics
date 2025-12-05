@@ -71,7 +71,7 @@ write.table(res_all,
   row.names = T
 )
 
-res <- res_all[abs(res_all$logFC) >= 1 & res_all$adj.P.Val < 0.05, ]
+res <- res_all[abs(res_all$log2FoldChange) >= 1 & res_all$padj < 0.05, ]
 
 write.table(res,
   file = file.path("data", omic_type, analysis_id, "results",
