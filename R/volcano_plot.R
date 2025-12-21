@@ -1,5 +1,5 @@
 library(optparse)
-library(ggplot2)
+
 
 option_list <- list(
   make_option(
