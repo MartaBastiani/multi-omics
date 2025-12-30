@@ -25,17 +25,7 @@ z_n_counts <- t(scale(t(n_counts)))
 
 dir.create(file.path("data", omic_type, analysis_id, "plots/heatmap"), recursive = TRUE, showWarnings = FALSE)
 
-for (rn in 1:length(rownames(contrast_list))) {
-  reference <- contrast_list[rn, ]$Reference  
-  target <- contrast_list[rn, ]$Target
-
-  ann <- metadata[metadata$Condition %in% c(target, reference), c(1, 2)]
-  rownames(ann) <- ann[, 1]
-  ann <- ann[, 2, drop = FALSE]
-  data <- z_n_counts[, rownames(ann)]
-  ann_col <- list(Condition = setNames(c("#bb0c00", "#00AFBB"), c(target, reference)))
-
-  png(file.path("data", omic_type, analysis_id, "plots/heatmap", paste0(target, "_vs_", reference, "_heatmap.png")), 1500, 1500, res = 300)
+plot_heatmap <- function(data, ann, ann_col, out_file) {
   pheatmap::pheatmap(
     mat = data,
     show_rownames = FALSE,
