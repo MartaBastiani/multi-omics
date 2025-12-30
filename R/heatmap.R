@@ -41,6 +41,35 @@ plot_heatmap <- function(data, ann, ann_col, out_file) {
     height = 4,
     annotation_colors = ann_col
   )
+}
+
+
+if (!is.null(opt$reference) && !is.null(opt$target)) {
+	reference <- opt$reference
+  target <- opt$target
+  ann <- metadata[metadata$Condition %in% c(target, reference), c(1, 2)]
+  rownames(ann) <- ann[, 1]
+  ann <- ann[, 2, drop = FALSE]
+  data <- z_n_counts[, rownames(ann)]
+  ann_col <- list(Condition = setNames(c("#bb0c00", "#00AFBB"), c(target, reference)))
+
+  png(file.path("data", omic_type, analysis_id, "plots/heatmap", paste0(target, "_vs_", reference, "_heatmap.png")), 1500, 1500, res = 300)
+  plot_heatmap(data = data, ann = ann, ann_col = ann_col)
+  dev.off()
+} else {
+	contrast_list <- read.delim(file.path("data", omic_type, analysis_id, "contrast.tsv"), sep="\t")
+  for (rn in 1:length(rownames(contrast_list))) {
+  reference <- contrast_list[rn, ]$Reference  
+  target <- contrast_list[rn, ]$Target
+
+  ann <- metadata[metadata$Condition %in% c(target, reference), c(1, 2)]
+  rownames(ann) <- ann[, 1]
+  ann <- ann[, 2, drop = FALSE]
+  data <- z_n_counts[, rownames(ann)]
+  ann_col <- list(Condition = setNames(c("#bb0c00", "#00AFBB"), c(target, reference)))
+
+  png(file.path("data", omic_type, analysis_id, "plots/heatmap", paste0(target, "_vs_", reference, "_heatmap.png")), 1500, 1500, res = 300)
+  plot_heatmap(data = data, ann = ann, ann_col = ann_col)
   dev.off()
 }
 
