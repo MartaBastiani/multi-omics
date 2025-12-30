@@ -5,14 +5,19 @@ spec <- matrix(c(
   ), byrow = TRUE, ncol = 4
 )
 
+opt <- getopt(spec)
+analysis_id <- opt$id
+metadata <- read.delim(file.path("data/RNA", analysis_id, "metadata.tsv"), sep = "\t")
+files <- paste(file.path("data/RNA", analysis_id, "mapped", paste("subset", metadata$Samples, "sorted.bam", sep = "_")))
 
-files <- read.delim(pipe("ls data/RNA/", analysis_id, "mapped/ | grep _sorted.bam"), header =F)[,1]
-ann <- read.delim("dbs/annotations/insert_name")
-metadata <- read.delim(file.path("data/RNA", analysis_id, "metadata.tsv"), sep="\t")
+ann <- read.delim("dbs/annotations/gene_annotations.tsv", sep ="\t")
+colnames(ann) <- c("GeneID", "Chr", "Start", "End", "Strand")
 
-fc_PE <- featureCounts(paste("mapped/", files, sep = ""), annot.ext=ann, isPairedEnd=TRUE)
+print("Read counting on genes")
+fc_PE <- Rsubread::featureCounts(files, annot.ext=ann, isPairedEnd=TRUE)
 
-saveRDS(fc_PE, file.path("data/RNA", analysis_id, "rds/count_RNA_out.rds"))
+saveRDS(fc_PE, file.path("data/RNA", analysis_id, "rds/fc_out.rds"))
 
 countdata <- fc_PE$counts
 colnames(countdata) <- metadata$Samples
+write.table(countdata, file.path("data/RNA", analysis_id, "to_DEA.tsv"), sep ="\t", quote = FALSE)
