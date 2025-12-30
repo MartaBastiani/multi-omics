@@ -71,6 +71,7 @@ if (!is.null(opt$reference) && !is.null(opt$target)) {
   png(file.path("data", omic_type, analysis_id, "plots/heatmap", paste0(target, "_vs_", reference, "_heatmap.png")), 1500, 1500, res = 300)
   plot_heatmap(data = data, ann = ann, ann_col = ann_col)
   dev.off()
+  }
 }
 
 
