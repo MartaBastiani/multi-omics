@@ -4,7 +4,8 @@ spec <- matrix(c(
     "verbose", "v", 2, "integer",
     "id", "i", 1, "character",
     "omic", "o", 1, "character",
-    "contrast_file", "C", 2, "character"
+    "reference", "R", 2, "character",
+    "target", "T", 2, "character"
 ), byrow=TRUE, ncol=4)
 
 opt <- getopt(spec)
@@ -12,11 +13,6 @@ opt <- getopt(spec)
 analysis_id <- opt$id
 omic_type <- opt$omic
 
-if (!is.null(opt$contrast_file)) {
-	files <- opt$contrast_file
-} else {
-	contrast_list <- read.delim(file.path("data", omic_type, analysis_id, "contrast.tsv"), sep="\t")
-}
 
 metadata <- read.delim(file.path("data", omic_type, analysis_id, "metadata.tsv"), sep="\t")
 
