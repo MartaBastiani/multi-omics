@@ -112,6 +112,13 @@ for (file in files) {
 	)) / 5) * 5
 
 	ylimit <- -log10(min(df_clean$padj))
+if (is.infinite(ylimit)) {
+		ylimit <- 200
+		padj_0 <- df_clean$padj == 0
+		df_clean$padj[padj_0] <- 10^-(round(rnorm(sum(padj_0),
+		    mean = 183, sd = 5), 0
+		))
+	}
 
 	p<-ggplot2::ggplot(
 		data = df_clean, 
