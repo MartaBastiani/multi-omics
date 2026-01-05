@@ -137,12 +137,21 @@ if (is.infinite(ylimit)) {
 			labels = color_labels
 		) + 
   	ggplot2::coord_cartesian(ylim = c(0, ylimit), xlim = c(-xlimit, xlimit)) +
-  	ggplot2::labs(
+  	ggplot2::ggtitle('')
+
+if (omic_type == "methylations") {
+	p <- p + ggplot2::labs(
 			color = 'Expression', #legend_title
+            x = expression("log"[2]*"methylation difference (%)"),
+			y = expression("-log"[10]*"q-value")
+		) 
+} else {
+	p <- p + ggplot2::labs(
+			color = 'Expression',
       x = expression("log"[2]*"FC"),
 			y = expression("-log"[10]*"p-value adj.")
-		) +
-  	ggplot2::ggtitle('')
+		) 
+}
   	
   	suppressWarnings(dir.create(file.path("data", omic_type, analysis_id, "plots", "volcano"), recursive = T))
 	filepath<-file.path("data",omic_type,analysis_id,"plots","volcano",filename)
