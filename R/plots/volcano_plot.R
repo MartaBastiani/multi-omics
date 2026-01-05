@@ -155,14 +155,14 @@ if (omic_type == "methylations") {
   	
   	suppressWarnings(dir.create(file.path("data", omic_type, analysis_id, "plots", "volcano"), recursive = T))
 	filepath<-file.path("data",omic_type,analysis_id,"plots","volcano",filename)
-	ggsave(
+ggplot2::ggsave(
 		filename = paste0(filepath,".png"),
 		plot = p,
 		dpi = 300,
 		width = 1800, height = 2400, units = "px"
 	)
 
-	ggsave(
+ggplot2::ggsave(
 		filename = paste0(filepath,".tiff"),
 		plot = p,
 		dpi = 300,
@@ -170,7 +170,7 @@ if (omic_type == "methylations") {
 		compression = "lzw"
 	)
 
-	ggsave(
+ggplot2::ggsave(
 		filename = paste0(filepath,".pdf"),
 		plot = p,
 		width = 1800, height = 2400, units = "px"
