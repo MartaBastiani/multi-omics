@@ -72,7 +72,7 @@ if (!is.null(opt$deseq2_results)) {
 for (file in files) {
 	filename <- paste0(file, "_volcano")
 	filename <- sub(".tsv", "", filename)
-	df <- read.delim(file.path("data",omic_type,analysis_id,"results",file),sep="\t")
+	df <- read.delim(file.path("data",omic_type,analysis_id,"DEA_results",file),sep="\t")
 	df_clean <- df[complete.cases(df), ]
 	df_clean$diffexpressed <- "NO"
 	df_clean$diffexpressed[df_clean$log2FoldChange > log2_fc_thr & df_clean$padj < p_value_thr] <- "UP"
