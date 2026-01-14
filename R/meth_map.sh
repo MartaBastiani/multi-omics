@@ -23,12 +23,12 @@ mkdir -p $OUT_PATH
 
 while IFS=$'\t' read -r -a MAP_ARRAY; do
     SAMPLE=${MAP_ARRAY[0]}
+    SAMPLE_NAME=${MAP_ARRAY[1]}
     echo -e "\nProcessing $SAMPLE"
 
     if [[ -n ${BASE[${MAP_ARRAY[0]}]} ]]; then
         FW="data/methylations/$ID/samples/${SAMPLE}_1.fastq.gz"
         RV="data/methylations/$ID/samples/${SAMPLE}_2.fastq.gz"
-        SAMPLE_NAME=${MAP_ARRAY[1]}
 
         if [[ ! -f "$FW" || ! -f "$RV" ]]; then
             echo "Error: FASTQ pair missing for $SAMPLE"
@@ -36,8 +36,17 @@ while IFS=$'\t' read -r -a MAP_ARRAY; do
         fi
 
         echo -e "\n\nMapping $SAMPLE_NAME"
-        bismark -p 4 --genome $REF -1 $FW -2 $RV -o $OUT_PATH -B $SAMPLE_NAME
-        else
+        bismark -p 4 --genome $REF -1 $FW -2 $RV -o $OUT_PATH -B $SAMPLE_NAME > $OUT_PATH/bismark_mapping.log 2>&1
+        
+    else
         echo "Error: $SAMPLE not found for mapping"
     fi
+
+    if [[ -f "$OUT_PATH/${SAMPLE_NAME}_pe.bam" ]]; then
+        echo -e "\nSorting bam file of ${SAMPLE_NAME}"
+        samtools sort -@20 $OUT_PATH/${SAMPLE_NAME}_pe.bam -o $OUT_PATH/${SAMPLE_NAME}_sorted_pe.bam 2>> $OUT_PATH/samtools.log 
+    else
+        echo -e "\nError: bam file of ${SAMPLE_NAME} not found."
+        continue
+    fi  
 done < "$TSV_FILE"
