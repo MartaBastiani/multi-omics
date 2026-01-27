@@ -18,6 +18,15 @@ analysis_id <- opt$id
 path <- paste0("data/chromatin/", analysis_id, "/mapped/")
 bamfiles <- paste0(path, list.files(path=path, pattern="*.rmDup.sorted.bam$"))
 fileslabels <- gsub(".rmDup.sorted.bam", "", basename(bamfiles))
+dir.create(paste0("data/chromatin/", analysis_id, "/QC"), showWarnings = TRUE)
+
+for (i in 1:length(bamfiles)) {
+    print(paste("Plotting", fileslabels[i], "fragment sizes"))
+    png(paste0("data/chromatin/", analysis_id, "/QC/", fileslabels[i], ".png"), 600, 600)
+    fragsize <- ATACseqQC::fragSizeDist(bamfiles[i], fileslabels[i])
+    dev.off()
+}
+
 
 tags <- c("AS", "XN", "XM", "XO", "XG", "NM", "MD", "YS", "YT") 
 seqlvls <- c(1:22, "X") # Insert Y chromosome if necessary !
