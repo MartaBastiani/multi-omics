@@ -44,3 +44,19 @@ for (i in 1:length(bamfiles)) {
     out_bam <- paste0(fileslabels[i], "_shift.bam")
     objs <- ATACseqQC::shiftGAlignmentsList(gal[[i]], outbam=paste0(path, out_bam))
 }
+
+
+ann <- read.delim("dbs/annotations/gencode_annotation.txt", sep = "\t", header = F)
+names(ann)=c("chr", "type", "start", "end","strand", "gene_id")
+ann$chr <- gsub("chr", "", ann$chr)
+
+genes <- GenomicRanges::makeGRangesFromDataFrame(ann)
+
+
+print(paste("Plotting TSS enrichment"))
+tsse <- ATACseqQC::TSSEscore(objs, genes)
+
+dir.create(paste0("data/chromatin/", analysis_id, "/QC/TSSEnrichment"), showWarnings = FALSE)
+tiff(paste0("data/chromatin/", analysis_id, "/QC/TSSEnrichment/tss_enrichment.tiff"), 600, 600)
+  plot(100*(-9:10-.5), tsse$values, type="b", xlab="distance to TSS", ylab="aggregate TSS score")
+dev.off()
