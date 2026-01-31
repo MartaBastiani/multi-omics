@@ -1,12 +1,12 @@
 ## Overview
-This repository provides a multi-omics analysis pipeline designed for bulk sequencing and proteomics data. Each omic type can be run independently.
+This repository provides a multi-omics analysis pipeline designed for performing differential analysis on bulk sequencing and proteomics data. Each omic type can be run independently.
 
 ## Supported Omics
 
 | Omic type | Mapping / Processing | QC | Differential analysis |
 |----------|---------------------|----|----------------------|
-| Methylomics | Bismark | Bismark QC | methylKit |
-| Chromatin accessibility (ATAC-seq) | Bowtie2 | ATACseqQC | DESeq2 |
+| Methylomics | Bismark | methylKit | methylKit |
+| Chromatin accessibility (ATAC-seq) | Bowtie2 + MACS3 | ATACseqQC | DESeq2 |
 | Transcriptomics (RNA-seq) | Bowtie2 | — | DESeq2 |
 | miRNomics | COMPSRA | COMPSRA | limma |
 | Proteomics | MaxQuant | — | limma |
@@ -15,8 +15,8 @@ This repository provides a multi-omics analysis pipeline designed for bulk seque
 The pipeline generates standard and omic-specific visualizations, including:
 - Principal Component Analysis (PCA)
 - Volcano plots
-- Coverage and peak distribution plots (ATAC-seq)
-- Methylation level distributions
+- Coverage and fragment size distribution plots (ATAC-seq)
+- Coverage and methylation level distributions
 
 ## Status
 This project is under active development as part of my PhD research.
