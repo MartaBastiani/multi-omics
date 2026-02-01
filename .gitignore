@@ -1,2 +1,5 @@
 dbs/bowtie2/*.bt2
 data/*
+dbs/annotations/*
+dbs/bowtie2/*
+dbs/genomes/*
