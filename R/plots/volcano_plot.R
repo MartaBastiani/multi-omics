@@ -11,7 +11,7 @@ option_list <- list(
   make_option(
     c("-i", "--id"),
     type    = "character",
-		default = NULL,
+	default = NULL,
     help    = "analysis id (required)"
   ),
   make_option(
@@ -112,7 +112,7 @@ for (file in files) {
 	)) / 5) * 5
 
 	ylimit <- -log10(min(df_clean$padj))
-if (is.infinite(ylimit)) {
+	if (is.infinite(ylimit)) {
 		ylimit <- 200
 		padj_0 <- df_clean$padj == 0
 		df_clean$padj[padj_0] <- 10^-(round(rnorm(sum(padj_0),
@@ -148,33 +148,33 @@ if (omic_type == "methylations") {
 } else {
 	p <- p + ggplot2::labs(
 			color = 'Expression',
-      x = expression("log"[2]*"FC"),
+            x = expression("log"[2]*"FC"),
 			y = expression("-log"[10]*"p-value adj.")
 		) 
 }
-  	
-  	suppressWarnings(dir.create(file.path("data", omic_type, analysis_id, "plots", "volcano"), recursive = T))
-	filepath<-file.path("data",omic_type,analysis_id,"plots","volcano",filename)
+
+suppressWarnings(dir.create(file.path("data", omic_type, analysis_id, "plots", "volcano"), recursive = T))
+filepath<-file.path("data",omic_type,analysis_id,"plots","volcano",filename)
 ggplot2::ggsave(
-		filename = paste0(filepath,".png"),
-		plot = p,
-		dpi = 300,
-		width = 1800, height = 2400, units = "px"
-	)
+	filename = paste0(filepath,".png"),
+	plot = p,
+	dpi = 300,
+	width = 1800, height = 2400, units = "px"
+)
 
 ggplot2::ggsave(
-		filename = paste0(filepath,".tiff"),
-		plot = p,
-		dpi = 300,
-		width = 1800, height = 2400, units = "px",
-		compression = "lzw"
-	)
+	filename = paste0(filepath,".tiff"),
+	plot = p,
+	dpi = 300,
+	width = 1800, height = 2400, units = "px",
+	compression = "lzw"
+)
 
 ggplot2::ggsave(
-		filename = paste0(filepath,".pdf"),
-		plot = p,
-		width = 1800, height = 2400, units = "px"
-	)
+	filename = paste0(filepath,".pdf"),
+	plot = p,
+	width = 1800, height = 2400, units = "px"
+)
 
 }
 
