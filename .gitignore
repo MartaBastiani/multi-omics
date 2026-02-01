@@ -1,5 +1,8 @@
-dbs/bowtie2/*.bt2
 data/*
+!data/.gitkeep
 dbs/annotations/*
+!dbs/annotations/.gitkeep
 dbs/bowtie2/*
+!dbs/bowtie2/.gitkeep
 dbs/genomes/*
+!dbs/genomes/.gitkeep
