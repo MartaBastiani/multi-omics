@@ -91,10 +91,10 @@ for (rn in 1:length(rownames(contrast_list))) {
   res_signed <- res_signed[order(res_signed$signedP,decreasing = TRUE),]
 
   res_subset <- subset(res_ordered, padj < p_value_thr & abs(log2FoldChange) > log2_fc_thr)
-  dir.create(file.path("data", omic_type, analysis_id, "tsv"), showWarnings = FALSE)
-  write.table(as.data.frame(res_ordered),file.path("data", omic_type, analysis_id,"tsv",filename2),sep="\t",row.names=TRUE,quote=FALSE)
-  write.table(as.data.frame(res_subset),file.path("data", omic_type, analysis_id,"tsv",filename2b),sep="\t",row.names=TRUE,quote=FALSE)
-  write.table(as.data.frame(res_signed),file.path("data", omic_type, analysis_id,"tsv",filename2c),sep="\t",row.names=FALSE,quote=FALSE)
+  dir.create(file.path("data", omic_type, analysis_id, "DEA_results"), showWarnings = FALSE)
+  write.table(as.data.frame(res_ordered),file.path("data", omic_type, analysis_id,"DEA_results",filename2),sep="\t",row.names=TRUE,quote=FALSE)
+  write.table(as.data.frame(res_subset),file.path("data", omic_type, analysis_id,"DEA_results",filename2b),sep="\t",row.names=TRUE,quote=FALSE)
+  write.table(as.data.frame(res_signed),file.path("data", omic_type, analysis_id,"DEA_results",filename2c),sep="\t",row.names=FALSE,quote=FALSE)
 
   coef <- paste0(row$Type,"_",row$Target,"_vs_",row$Reference)
   resLFC <- lfcShrink(dds,coef=coef, type="apeglm")
@@ -103,8 +103,8 @@ for (rn in 1:length(rownames(contrast_list))) {
   filename3<-paste0(filename1,"_shrinked",".tsv")
   filename3b<-paste0(filename1,"_shrinked_filtered",".tsv")
 
-  write.table(as.data.frame(resLFC_ordered),file.path("data", omic_type, analysis_id,"tsv",filename3),sep="\t",row.names=TRUE,quote=FALSE)
-  write.table(as.data.frame(resLFC_subset),file.path("data", omic_type, analysis_id,"tsv",filename3b),sep="\t",row.names=TRUE,quote=FALSE)
+  write.table(as.data.frame(resLFC_ordered),file.path("data", omic_type, analysis_id,"DEA_results",filename3),sep="\t",row.names=TRUE,quote=FALSE)
+  write.table(as.data.frame(resLFC_subset),file.path("data", omic_type, analysis_id,"DEA_results",filename3b),sep="\t",row.names=TRUE,quote=FALSE)
 
 }
 
