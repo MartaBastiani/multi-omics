@@ -63,9 +63,9 @@ res_all <- res_all[complete.cases(res_all), ]
 
 colnames(res_all) <- c("log2FoldChange", "AveExpr", "t", "P.Value", "padj", "B")
 
-suppressWarnings(dir.create(paste0("data/", omic_type, "/", analysis_id, "/results")))
+suppressWarnings(dir.create(paste0("data/", omic_type, "/", analysis_id, "/DEA_results")))
 write.table(res_all,
-  file = file.path("data", omic_type, analysis_id, "results",
+  file = file.path("data", omic_type, analysis_id, "DEA_results",
   paste0(Tg, "_vs_", Rf, "_all.tsv")),
   sep = "\t",
   quote = F,
