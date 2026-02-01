@@ -75,7 +75,7 @@ write.table(res_all,
 res <- res_all[abs(res_all$log2FoldChange) >= 1 & res_all$padj < 0.05, ]
 
 write.table(res,
-  file = file.path("data", omic_type, analysis_id, "results",
+  file = file.path("data", omic_type, analysis_id, "DEA_results",
   paste0(Tg, "_vs_", Rf, "_sel.tsv")),
   sep = "\t",
   quote = F,
